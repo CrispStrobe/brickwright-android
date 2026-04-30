@@ -1,22 +1,39 @@
+# turbowarp-android (LEGO build)
 
-# TurboWarp for Android (Unofficial Build)
+A Capacitor-based Android wrapper around the [TurboWarp / `scratch-gui`](https://github.com/CrispStrobe/scratch-gui)
+web client, with native Bluetooth bridges so JavaScript extensions can talk to
+real LEGO hardware:
 
-**A native Android wrapper for TurboWarp Desktop, featuring hardware support for LEGO® EV3 (Bluetooth Classic) and Spike Prime (BLE).**
+- **LEGO® EV3** — Bluetooth Classic (RFCOMM SPP)
+- **LEGO® Spike Prime / Robot Inventor** — BLE (FW 3.x) and BTC (FW 2.x)
+- Standard TurboWarp features: 60 FPS, compiler, dark mode, custom extensions.
 
-This project uses **Capacitor** to wrap the TurboWarp web client into a native Android app, injecting a custom Bluetooth bridge to allow JavaScript to talk to physical LEGO bricks.
+The Android shell injects a JavaScript bridge that intercepts Scratch Link
+WebSocket URLs and routes them to native Bluetooth via Capacitor plugins —
+so extensions written for ScratchLink desktop work unchanged on the device.
 
----
+## Related repos
 
-## Project Structure
+| Repo | Role |
+|------|------|
+| **`turbowarp-android` (this)** | Android wrapper (Capacitor + native BT bridges). |
+| [`CrispStrobe/scratch-gui`](https://github.com/CrispStrobe/scratch-gui) | The editor UI bundled inside the app. |
+| [`CrispStrobe/extensions`](https://github.com/CrispStrobe/extensions) | Extensions copied into the app's web assets. |
+| [`CrispStrobe/turbowarp-ios`](https://github.com/CrispStrobe/turbowarp-ios) | iOS counterpart (WKWebView + native bridges). |
+| [`CrispStrobe/turbowarp-desktop`](https://github.com/CrispStrobe/turbowarp-desktop) | Electron desktop counterpart. |
+| [`CrispStrobe/turbowarp-lego`](https://github.com/CrispStrobe/turbowarp-lego) | Working sandbox + Python bridges (used by the bridge-mode extensions). |
 
-This repository is designed to live "side-by-side" with your other TurboWarp repositories. It cannot be built in isolation.
+## Project layout
+
+This repo cannot be built standalone — it expects sibling clones of
+`scratch-gui` and `extensions`. Lay them out like this:
 
 ```text
 /workspace/
-├── extensions/          # (Clone: https://github.com/CrispStrobe/extensions)
-├── scratch-gui/         # (Clone: https://github.com/CrispStrobe/scratch-gui)
-└── turbowarp-android/   # (This Repo)
-    ├── android/         # Native Android Studio Project
+├── extensions/          # clone: https://github.com/CrispStrobe/extensions
+├── scratch-gui/         # clone: https://github.com/CrispStrobe/scratch-gui
+└── turbowarp-android/   # this repo
+    ├── android/         # Android Studio project
     ├── capacitor.config.json
     └── package.json
 ```
