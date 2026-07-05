@@ -1,6 +1,6 @@
 # turbowarp-android (LEGO build)
 
-A Capacitor-based Android wrapper around the [TurboWarp / `scratch-gui`](https://github.com/CrispStrobe/scratch-gui)
+A Capacitor-based Android wrapper around the [TurboWarp / `scratch-gui`](https://github.com/CrispStrobe/brickwright)
 web client, with native Bluetooth bridges so JavaScript extensions can talk to
 real LEGO hardware:
 
@@ -17,7 +17,7 @@ so extensions written for ScratchLink desktop work unchanged on the device.
 | Repo | Role |
 |------|------|
 | **`turbowarp-android` (this)** | Android wrapper (Capacitor + native BT bridges). |
-| [`CrispStrobe/scratch-gui`](https://github.com/CrispStrobe/scratch-gui) | The editor UI bundled inside the app. |
+| [`CrispStrobe/brickwright`](https://github.com/CrispStrobe/brickwright) | The editor UI bundled inside the app. |
 | [`CrispStrobe/extensions`](https://github.com/CrispStrobe/extensions) | Extensions copied into the app's web assets. |
 | [`CrispStrobe/turbowarp-ios`](https://github.com/CrispStrobe/turbowarp-ios) | iOS counterpart (WKWebView + native bridges). |
 | [`CrispStrobe/turbowarp-desktop`](https://github.com/CrispStrobe/turbowarp-desktop) | Electron desktop counterpart. |
@@ -31,7 +31,7 @@ This repo cannot be built standalone — it expects sibling clones of
 ```text
 /workspace/
 ├── extensions/          # clone: https://github.com/CrispStrobe/extensions
-├── scratch-gui/         # clone: https://github.com/CrispStrobe/scratch-gui
+├── scratch-gui/         # clone: https://github.com/CrispStrobe/brickwright
 └── turbowarp-android/   # this repo
     ├── android/         # Android Studio project
     ├── capacitor.config.json
