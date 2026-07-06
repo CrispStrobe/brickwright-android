@@ -1,6 +1,6 @@
 {
   "appId": "com.crispstrobe.turbowarp",
-  "appName": "TurboWarp",
+  "appName": "Brickwright",
   "webDir": "../scratch-gui/build",
   "server": {
     "androidScheme": "https",
