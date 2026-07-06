@@ -8,10 +8,10 @@ jobs:
     name: Android (.apk)
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout turbowarp-android
+      - name: Checkout brickwright-android
         uses: actions/checkout@v4
         with:
-          path: turbowarp-android
+          path: brickwright-android
 
       - name: Checkout sibling scratch-gui
         uses: actions/checkout@v4
@@ -58,32 +58,32 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=8192
         run: ./node_modules/.bin/webpack --bail
 
-      - name: Install turbowarp-android deps
-        working-directory: turbowarp-android
+      - name: Install brickwright-android deps
+        working-directory: brickwright-android
         run: npm install --no-audit --no-fund
 
       - name: Capacitor sync (android)
-        working-directory: turbowarp-android
+        working-directory: brickwright-android
         run: npx cap sync android
 
       - name: Build APK
-        working-directory: turbowarp-android/android
+        working-directory: brickwright-android/android
         run: ./gradlew assembleRelease --no-daemon
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: turbowarp-android-apk
-          path: turbowarp-android/android/app/build/outputs/apk/release/*.apk
+          name: brickwright-android-apk
+          path: brickwright-android/android/app/build/outputs/apk/release/*.apk
 
   build-ios:
     name: iOS (.app, .ipa)
     runs-on: macos-latest
     steps:
-      - name: Checkout turbowarp-android
+      - name: Checkout brickwright-android
         uses: actions/checkout@v4
         with:
-          path: turbowarp-android
+          path: brickwright-android
 
       - name: Checkout sibling scratch-gui
         uses: actions/checkout@v4
@@ -119,16 +119,16 @@ jobs:
           NODE_OPTIONS: --max-old-space-size=8192
         run: ./node_modules/.bin/webpack --bail
 
-      - name: Install turbowarp-android deps
-        working-directory: turbowarp-android
+      - name: Install brickwright-android deps
+        working-directory: brickwright-android
         run: npm install --no-audit --no-fund
 
       - name: Capacitor sync (ios)
-        working-directory: turbowarp-android
+        working-directory: brickwright-android
         run: npx cap sync ios
 
       - name: Build iOS app (unsigned, device SDK)
-        working-directory: turbowarp-android/ios/App
+        working-directory: brickwright-android/ios/App
         run: |
           xcodebuild \
             -project App.xcodeproj \
@@ -143,7 +143,7 @@ jobs:
             build
 
       - name: Wrap App.app into unsigned .ipa
-        working-directory: turbowarp-android/ios/App/build/Release-iphoneos
+        working-directory: brickwright-android/ios/App/build/Release-iphoneos
         run: |
           mkdir -p Payload
           cp -R App.app Payload/
@@ -153,5 +153,5 @@ jobs:
       - name: Upload .ipa artifact
         uses: actions/upload-artifact@v4
         with:
-          name: turbowarp-ios-ipa
-          path: turbowarp-android/ios/App/TurboWarp-unsigned.ipa
+          name: brickwright-ios-ipa
+          path: brickwright-android/ios/App/TurboWarp-unsigned.ipa
