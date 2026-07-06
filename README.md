@@ -1,4 +1,4 @@
-# turbowarp-android (LEGO build)
+# brickwright-android (LEGO build)
 
 A Capacitor-based Android wrapper around the [TurboWarp / `scratch-gui`](https://github.com/CrispStrobe/brickwright)
 web client, with native Bluetooth bridges so JavaScript extensions can talk to
@@ -16,12 +16,12 @@ so extensions written for ScratchLink desktop work unchanged on the device.
 
 | Repo | Role |
 |------|------|
-| **`turbowarp-android` (this)** | Android wrapper (Capacitor + native BT bridges). |
+| **`brickwright-android` (this)** | Android wrapper (Capacitor + native BT bridges). |
 | [`CrispStrobe/brickwright`](https://github.com/CrispStrobe/brickwright) | The editor UI bundled inside the app. |
 | [`CrispStrobe/extensions`](https://github.com/CrispStrobe/extensions) | Extensions copied into the app's web assets. |
-| [`CrispStrobe/turbowarp-ios`](https://github.com/CrispStrobe/turbowarp-ios) | iOS counterpart (WKWebView + native bridges). |
-| [`CrispStrobe/turbowarp-desktop`](https://github.com/CrispStrobe/turbowarp-desktop) | Electron desktop counterpart. |
-| [`CrispStrobe/turbowarp-lego`](https://github.com/CrispStrobe/turbowarp-lego) | Working sandbox + Python bridges (used by the bridge-mode extensions). |
+| [`CrispStrobe/brickwright-ios`](https://github.com/CrispStrobe/brickwright-ios) | iOS counterpart (WKWebView + native bridges). |
+| [`CrispStrobe/brickwright-desktop`](https://github.com/CrispStrobe/brickwright-desktop) | Electron desktop counterpart. |
+| [`CrispStrobe/brickwright-lego`](https://github.com/CrispStrobe/brickwright-lego) | Working sandbox + Python bridges (used by the bridge-mode extensions). |
 
 ## Project layout
 
@@ -32,7 +32,7 @@ This repo cannot be built standalone — it expects sibling clones of
 /workspace/
 ├── extensions/          # clone: https://github.com/CrispStrobe/extensions
 ├── scratch-gui/         # clone: https://github.com/CrispStrobe/brickwright
-└── turbowarp-android/   # this repo
+└── brickwright-android/   # this repo
     ├── android/         # Android Studio project
     ├── capacitor.config.json
     └── package.json
@@ -51,7 +51,7 @@ This repo cannot be built standalone — it expects sibling clones of
 
 ## Quick Start (Build Scripts)
 
-All build commands are available as npm scripts. Run them from the `turbowarp-android/` directory.
+All build commands are available as npm scripts. Run them from the `brickwright-android/` directory.
 
 ### One-Command Builds
 
@@ -93,7 +93,7 @@ npm run run:ios
 
 ```bash
 # 1. Install dependencies (both projects)
-cd ../scratch-gui && npm install && cd ../turbowarp-android && npm install
+cd ../scratch-gui && npm install && cd ../brickwright-android && npm install
 
 # 2. Build web + sync + copy extensions
 npm run build:android
@@ -110,7 +110,7 @@ npm run open:android
 npx cap add ios
 
 # 2. Install dependencies
-cd ../scratch-gui && npm install && cd ../turbowarp-android && npm install
+cd ../scratch-gui && npm install && cd ../brickwright-android && npm install
 
 # 3. Build web + sync
 npm run build:ios
@@ -150,7 +150,7 @@ npm run build
 # Result: A populated 'build/' folder containing index.html and static assets.
 ```
 
-Or use the shortcut from `turbowarp-android/`:
+Or use the shortcut from `brickwright-android/`:
 
 ```bash
 npm run build:web
@@ -162,7 +162,7 @@ npm run build:web
 
 ### 1. Initialize & Sync
 
-Run these commands from the `turbowarp-android` root to pull in the latest web assets and plugins.
+Run these commands from the `brickwright-android` root to pull in the latest web assets and plugins.
 
 ```bash
 npm install
