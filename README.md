@@ -21,7 +21,7 @@ so extensions written for ScratchLink desktop work unchanged on the device.
 | [`CrispStrobe/extensions`](https://github.com/CrispStrobe/extensions) | Extensions copied into the app's web assets. |
 | [`CrispStrobe/brickwright-ios`](https://github.com/CrispStrobe/brickwright-ios) | iOS counterpart (WKWebView + native bridges). |
 | [`CrispStrobe/brickwright-desktop`](https://github.com/CrispStrobe/brickwright-desktop) | Electron desktop counterpart. |
-| [`CrispStrobe/brickwright-lego`](https://github.com/CrispStrobe/brickwright-lego) | Working sandbox + Python bridges (used by the bridge-mode extensions). |
+| [`CrispStrobe/brickwright-bridges`](https://github.com/CrispStrobe/brickwright-bridges) | Working sandbox + Python bridges (used by the bridge-mode extensions). |
 
 ## Project layout
 
