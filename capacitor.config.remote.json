@@ -1,0 +1,12 @@
+{
+  "appId": "com.crispstrobe.turbowarp",
+  "appName": "Brickwright",
+  "webDir": "remote-www",
+  "server": {
+    "url": "https://crispstrobe.github.io/brickwright/",
+    "androidScheme": "https",
+    "iosScheme": "https",
+    "cleartext": false,
+    "allowNavigation": ["crispstrobe.github.io"]
+  }
+}

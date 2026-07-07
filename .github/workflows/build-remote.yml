@@ -1,0 +1,88 @@
+# Remote-loading variant: instead of bundling the Brickwright web build, the wrapper
+# loads the hosted editor (https://crispstrobe.github.io/brickwright/) via Capacitor's
+# server.url. Produces a small APK + IPA — the App-Store-oriented "harness + native
+# Bluetooth bridges, not the web build inside" build. The default (bundled) release.yml
+# is untouched. Uploads artifacts on the run (unsigned).
+name: Build (remote-loading variant)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  android:
+    name: Android (.apk, remote)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: brickwright-android
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: android-actions/setup-android@v3
+      - name: Use the remote-loading Capacitor config
+        working-directory: brickwright-android
+        run: cp capacitor.config.remote.json capacitor.config.json
+      - name: Install deps
+        working-directory: brickwright-android
+        run: npm install --no-audit --no-fund
+      - name: Capacitor sync (android)
+        working-directory: brickwright-android
+        run: npx cap sync android
+      - name: Build APK
+        working-directory: brickwright-android/android
+        run: ./gradlew assembleRelease --no-daemon
+      - name: Stage APK
+        run: cp brickwright-android/android/app/build/outputs/apk/release/app-release-unsigned.apk brickwright-android-remote-unsigned.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: android-remote-apk
+          path: brickwright-android-remote-unsigned.apk
+
+  ios:
+    name: iOS (.ipa, remote)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: brickwright-android
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Use the remote-loading Capacitor config
+        working-directory: brickwright-android
+        run: cp capacitor.config.remote.json capacitor.config.json
+      - name: Install deps
+        working-directory: brickwright-android
+        run: npm install --no-audit --no-fund
+      - name: Capacitor sync (ios)
+        working-directory: brickwright-android
+        run: npx cap sync ios
+      - name: Build iOS app (unsigned, device SDK)
+        working-directory: brickwright-android/ios/App
+        run: |
+          xcodebuild \
+            -project App.xcodeproj \
+            -target App \
+            -configuration Release \
+            -sdk iphoneos \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            SYMROOT="$PWD/build" \
+            OBJROOT="$PWD/build/intermediates" \
+            build
+      - name: Wrap App.app into unsigned .ipa
+        working-directory: brickwright-android/ios/App/build/Release-iphoneos
+        run: |
+          mkdir -p Payload
+          cp -R App.app Payload/
+          zip -qr "$GITHUB_WORKSPACE/brickwright-android-ios-remote-unsigned.ipa" Payload
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ios-remote-ipa
+          path: brickwright-android-ios-remote-unsigned.ipa
